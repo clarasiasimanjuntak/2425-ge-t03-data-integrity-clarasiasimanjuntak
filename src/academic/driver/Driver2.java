@@ -55,8 +55,10 @@ public class Driver2 {
                 }
             }
         }
+
         sc.close();
 
+        // Sort and print the collections
         courses.sort(Comparator.comparing(Course::getCourseCode));
         students.sort(Comparator.comparing(Student::getStudentId));
         enrollments.sort(Comparator.comparing(Enrollment::getCourseCode).thenComparing(Enrollment::getStudentId));

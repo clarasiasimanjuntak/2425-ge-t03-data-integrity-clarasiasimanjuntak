@@ -1,86 +1,89 @@
-/**
- * 12S23019 - Clarasia Simanjuntak
- * 12S23043 - Grace Tiodora
- */
 package academic.driver;
 
 import academic.model.Course;
 import academic.model.Enrollment;
 import academic.model.Student;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Driver1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
-        ArrayList<Course> courses = new ArrayList<>();
-        ArrayList<Student> students = new ArrayList<>();
-        ArrayList<Enrollment> enrollments = new ArrayList<>();
+        List<Course> daftarMataKuliah = new ArrayList<>();
+        List<Student> daftarMahasiswa = new ArrayList<>();
+        List<Enrollment> daftarPendaftaran = new ArrayList<>();
 
         while (true) {
-            String input = sc.nextLine();
-            if (input.equals("---")) break; // Stop input saat ada "---"
+            String masukan = sc.nextLine();
+            if (masukan.equals("---")) break;
 
-            String[] data = input.split("#");
-
+            String[] data = masukan.split("#");
             if (data.length > 1) {
-                String command = data[0]; // Ambil jenis perintah
-                
-                switch (command) {
-                    case "course-add":
-                        if (data.length == 5) { // Harus ada 5 bagian
-                            String courseCode = data[1];
-                            String courseName = data[2];
-                            int sks = Integer.parseInt(data[3]); // Parsing integer
-                            String grade = data[4];
-                            courses.add(new Course(courseCode, courseName, sks, grade));
-                        }
-                        break;
+                String perintah = data[0].trim();
+                try {
+                    switch (perintah) {
+                        case "course-add":
+                            if (data.length == 5) {
+                                Course mataKuliah = new Course(data[1], data[2], Integer.parseInt(data[3]), data[4]);
+                                if (!daftarMataKuliah.contains(mataKuliah)) {
+                                    daftarMataKuliah.add(mataKuliah);
+                                }
+                            }
+                            break;
 
-                    case "student-add":
-                        if (data.length == 5) { // Harus ada 5 bagian
-                            String studentId = data[1];
-                            String studentName = data[2];
-                            String academicYear = data[3]; // Menggunakan String
-                            String semester = data[4];
-                            students.add(new Student(studentId, studentName, academicYear, semester));
-                        }
-                        break;
+                        case "student-add":
+                            if (data.length == 5) {
+                                Student mahasiswa = new Student(data[1], data[2], data[3], data[4]);
+                                if (!daftarMahasiswa.contains(mahasiswa)) {
+                                    daftarMahasiswa.add(mahasiswa);
+                                }
+                            }
+                            break;
 
-                    case "enrollment-add":
-                        if (data.length == 5) {
-                            String courseCode = data[1];
-                            String studentId = data[2];
-                            String academicYear = data[3]; // Menggunakan String
-                            String semester = data[4];
-                            enrollments.add(new Enrollment(courseCode, studentId, academicYear, semester, "None"));
-                        }
-                        break;
-
-                    default:
-                        System.out.println("Perintah tidak dikenali: " + command);
-                        break;
+                        case "enrollment-add":
+                            if (data.length == 5) {
+                                String kodeMataKuliah = data[1];
+                                String nimMahasiswa = data[2];
+                                
+                                boolean mataKuliahAda = daftarMataKuliah.stream()
+                                    .anyMatch(c -> c.getCourseCode().equals(kodeMataKuliah));
+                                boolean mahasiswaAda = daftarMahasiswa.stream()
+                                    .anyMatch(s -> s.getStudentId().equals(nimMahasiswa));
+                                
+                                if (!mataKuliahAda) {
+                                    System.out.println("invalid course|" + kodeMataKuliah);
+                                }
+                                if (!mahasiswaAda) {
+                                    System.out.println("invalid student|" + nimMahasiswa);
+                                }
+                                
+                                if (mataKuliahAda && mahasiswaAda) {
+                                    daftarPendaftaran.add(new Enrollment(kodeMataKuliah, nimMahasiswa, data[3], data[4], "None"));
+                                }
+                            }
+                            break;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error: " + e.getMessage());
                 }
             }
-            
         }
-
         sc.close();
 
-        // Cetak semua Course
-        for (Course c : courses) {
-            System.out.println(c);
-        }
+        // Urutkan sebelum mencetak
+        daftarMataKuliah.sort(Comparator.comparing(Course::getCourseCode));
+        daftarMahasiswa.sort(Comparator.comparing(Student::getStudentId));
+        daftarPendaftaran.sort(Comparator.comparing(Enrollment::getCourseCode)
+                        .thenComparing(Enrollment::getStudentId));
 
-        // Cetak semua Student
-        for (Student s : students) {
-            System.out.println(s);
+        // Cetak semua data
+        for (Course mk : daftarMataKuliah) {
+            System.out.println(mk);
         }
-
-        // Cetak semua Enrollment
-        for (Enrollment e : enrollments) {
-            System.out.println(e);
+        for (Student mhs : daftarMahasiswa) {
+            System.out.println(mhs);
+        }
+        for (Enrollment daftar : daftarPendaftaran) {
+            System.out.println(daftar);
         }
     }
 }

@@ -10,7 +10,7 @@ public class Student {
 
     public Student(String studentId, String studentName, String academicYear, String semester) {
         if (studentId == null || studentId.isEmpty() || studentName == null || studentName.isEmpty()) {
-            throw new IllegalArgumentException("ID dan nama mahasiswa tidak boleh kosong!");
+            throw new IllegalArgumentException("NIM dan nama mahasiswa tidak boleh kosong!");
         }
         this.studentId = studentId;
         this.studentName = studentName;
