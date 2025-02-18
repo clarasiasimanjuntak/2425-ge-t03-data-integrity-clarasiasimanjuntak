@@ -8,9 +8,9 @@ import java.util.*;
 public class Driver2 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        List<Course> courses = new ArrayList<>();
-        List<Student> students = new ArrayList<>();
-        List<Enrollment> enrollments = new ArrayList<>();
+        Map<String, Course> courses = new TreeMap<>();
+        Map<String, Student> students = new TreeMap<>();
+        Map<String, List<Enrollment>> enrollmentsByStudent = new TreeMap<>();
 
         while (true) {
             String input = sc.nextLine();
@@ -19,58 +19,67 @@ public class Driver2 {
             String[] data = input.split("#");
             if (data.length > 1) {
                 String command = data[0].trim();
-                try {
-                    switch (command) {
-                        case "course-add":
+                
+                switch (command) {
+                    case "course-add":
+                        if (data.length == 5) {
                             Course course = new Course(data[1], data[2], Integer.parseInt(data[3]), data[4]);
-                            if (!courses.contains(course)) {
-                                courses.add(course);
-                            }
-                            break;
-                        case "student-add":
+                            courses.putIfAbsent(data[1], course);
+                        }
+                        break;
+
+                    case "student-add":
+                        if (data.length == 5) {
                             Student student = new Student(data[1], data[2], data[3], data[4]);
-                            if (!students.contains(student)) {
-                                students.add(student);
+                            students.putIfAbsent(data[1], student);
+                            // Initialize empty enrollment list for new student
+                            enrollmentsByStudent.putIfAbsent(data[1], new ArrayList<>());
+                        }
+                        break;
+
+                    case "enrollment-add":
+                        if (data.length == 5) {
+                            String courseCode = data[1];
+                            String studentId = data[2];
+                            
+                            if (!courses.containsKey(courseCode)) {
+                                System.out.println("invalid course|" + courseCode);
+                                continue;
                             }
-                            break;
-                        case "enrollment-add":
-                            boolean courseExists = courses.stream().anyMatch(c -> c.getCourseCode().equals(data[1]));
-                            boolean studentExists = students.stream().anyMatch(s -> s.getStudentId().equals(data[2]));
-                            if (courseExists && studentExists) {
-                                enrollments.add(new Enrollment(data[1], data[2], data[3], data[4], "None"));
-                            } else {
-                                if (!courseExists) {
-                                    System.out.println("invalid course|" + data[1]);
-                                }
-                                if (!studentExists) {
-                                    System.out.println("invalid student|" + data[2]);
+                            if (!students.containsKey(studentId)) {
+                                System.out.println("invalid student|" + studentId);
+                                continue;
+                            }
+                            
+                            Enrollment enrollment = new Enrollment(courseCode, studentId, data[3], data[4], "None");
+                            enrollmentsByStudent.get(studentId).add(enrollment);
+                        }
+                        break;
+
+                    case "student-enrollment-print":
+                        if (data.length == 2) {
+                            String studentId = data[1];
+                            Student student = students.get(studentId);
+                            if (student != null) {
+                                System.out.println(student);
+                                List<Enrollment> studentEnrollments = enrollmentsByStudent.getOrDefault(studentId, new ArrayList<>());
+                                
+                                // Sort enrollments by course code
+                                studentEnrollments.sort((e1, e2) -> e1.getCourseCode().compareTo(e2.getCourseCode()));
+                                
+                                for (Enrollment enrollment : studentEnrollments) {
+                                    Course course = courses.get(enrollment.getCourseCode());
+                                    if (course != null) {
+                                        System.out.println(course);
+                                        System.out.println(enrollment);
+                                    }
                                 }
                             }
-                            break;
-                        default:
-                            System.out.println("Invalid command");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Error: " + e.getMessage());
+                        }
+                        break;
                 }
             }
         }
-
         sc.close();
-
-        // Sort and print the collections
-        courses.sort(Comparator.comparing(Course::getCourseCode));
-        students.sort(Comparator.comparing(Student::getStudentId));
-        enrollments.sort(Comparator.comparing(Enrollment::getCourseCode).thenComparing(Enrollment::getStudentId));
-
-        for (Course c : courses) {
-            System.out.println(c);
-        }
-        for (Student s : students) {
-            System.out.println(s);
-        }
-        for (Enrollment e : enrollments) {
-            System.out.println(e);
-        }
     }
 }

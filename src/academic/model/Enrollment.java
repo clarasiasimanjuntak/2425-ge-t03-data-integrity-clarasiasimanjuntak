@@ -1,29 +1,29 @@
 package academic.model;
 
 public class Enrollment {
-    private final String kodeMataKuliah;
-    private final String nimMahasiswa;
-    private final String tahunAkademik;
+    private final String courseCode;
+    private final String studentId;
+    private final String academicYear;
     private final String semester;
-    private final String nilai;
+    private final String grade;
 
-    public Enrollment(String kodeMataKuliah, String nimMahasiswa, String tahunAkademik, String semester, String nilai) {
-        this.kodeMataKuliah = kodeMataKuliah;
-        this.nimMahasiswa = nimMahasiswa;
-        this.tahunAkademik = tahunAkademik;
+    public Enrollment(String courseCode, String studentId, String academicYear, String semester, String grade) {
+        this.courseCode = courseCode;
+        this.studentId = studentId;
+        this.academicYear = academicYear;
         this.semester = semester;
-        this.nilai = nilai;
+        this.grade = grade;
     }
 
     public String getCourseCode() {
-        return kodeMataKuliah;
+        return courseCode;
     }
 
     public String getStudentId() {
-        return nimMahasiswa;
+        return studentId;
     }
 
     public String toString() {
-        return kodeMataKuliah + "|" + nimMahasiswa + "|" + tahunAkademik + "|" + semester + "|" + nilai;
+        return courseCode + "|" + studentId + "|" + academicYear + "|" + semester + "|" + grade;
     }
 }
