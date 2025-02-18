@@ -21,6 +21,7 @@ public class Driver1 {
             if (input.equals("---")) break;
 
             String[] data = input.split("#");
+            
             if (data.length > 1) {
                 String command = data[0].trim();
 
