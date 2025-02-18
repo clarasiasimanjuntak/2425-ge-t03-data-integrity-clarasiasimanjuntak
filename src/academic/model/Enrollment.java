@@ -1,7 +1,3 @@
-/**
- * 12S23019 - Clarasia Simanjuntak 
- * 12S23043 - Grace Tiodora
- */
 package academic.model;
 
 public class Enrollment {
@@ -22,9 +18,19 @@ public class Enrollment {
     public String getCourseCode() {
         return courseCode;
     }
+    
     public String getStudentId() {
         return studentId;
     }
+    
+    public String getAcademicYear() {
+        return academicYear;
+    }
+    
+    public String getSemester() {
+        return semester;
+    }
+    
     public String toString() {
         return courseCode + "|" + studentId + "|" + academicYear + "|" + semester + "|" + grade;
     }

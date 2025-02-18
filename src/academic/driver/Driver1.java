@@ -64,16 +64,23 @@ public class Driver1 {
         for (Student student : students.values()) {
             System.out.println(student);
         }
-
-        enrollments.sort((e1, e2) -> {
-            int cmp = e1.getCourseCode().compareTo(e2.getCourseCode());
-            if (cmp == 0) {
-                return e1.getStudentId().compareTo(e2.getStudentId());
-            }
-            return cmp;
-        });
-        for (Enrollment enrollment : enrollments) {
-            System.out.println(enrollment);
+     enrollments.sort((e1, e2) -> {
+     int cmp = e1.getCourseCode().compareTo(e2.getCourseCode());
+     if (cmp == 0) {
+        cmp = e2.getAcademicYear().compareTo(e1.getAcademicYear());
+        if (cmp == 0) {
+            return e1.getStudentId().compareTo(e2.getStudentId());
         }
+        return cmp;
+    }
+    return cmp;
+     });
+
+ for (Enrollment enrollment : enrollments) {
+    System.out.println(enrollment);
+}
     }
 }
+
+    
+
