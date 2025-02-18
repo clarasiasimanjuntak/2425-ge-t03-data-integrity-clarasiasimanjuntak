@@ -1,3 +1,7 @@
+/**
+ * 12S23019 - Clarasia Simanjuntak 
+ * 12S23043 - Grace Tiodora
+ */
 package academic.driver;
 
 import academic.model.Course;
@@ -8,9 +12,7 @@ import java.util.*;
 public class Driver1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        // Untuk course, gunakan TreeMap agar urut berdasarkan kode secara ascending.
         Map<String, Course> courses = new TreeMap<>();
-        // Untuk student, gunakan LinkedHashMap agar urutan sesuai input.
         Map<String, Student> students = new LinkedHashMap<>();
         List<Enrollment> enrollments = new ArrayList<>();
 
@@ -41,12 +43,10 @@ public class Driver1 {
                         if (data.length == 5) {
                             String courseCode = data[1];
                             String studentId = data[2];
-                            // Jika course tidak ada, tampilkan error dan skip.
                             if (!courses.containsKey(courseCode)) {
                                 System.out.println("invalid course|" + courseCode);
                                 continue;
                             }
-                            // Jika student tidak ada, tampilkan error dan skip.
                             if (!students.containsKey(studentId)) {
                                 System.out.println("invalid student|" + studentId);
                                 continue;
@@ -58,18 +58,13 @@ public class Driver1 {
             }
         }
         sc.close();
-
-        // Cetak daftar courses (urut ascending karena TreeMap)
         for (Course course : courses.values()) {
             System.out.println(course);
         }
-
-        // Cetak daftar students (urutan sesuai input)
         for (Student student : students.values()) {
             System.out.println(student);
         }
 
-        // Sort enrollments: pertama berdasarkan course code, lalu student id
         enrollments.sort((e1, e2) -> {
             int cmp = e1.getCourseCode().compareTo(e2.getCourseCode());
             if (cmp == 0) {

@@ -1,3 +1,7 @@
+/**
+ * 12S23019 - Clarasia Simanjuntak 
+ * 12S23043 - Grace Tiodora
+ */
 package academic.driver;
 
 import academic.model.Course;
@@ -8,14 +12,9 @@ import java.util.*;
 public class Driver2 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        // Courses diurutkan secara ascending (TreeMap)
         Map<String, Course> courses = new TreeMap<>();
-        // Students menggunakan LinkedHashMap agar urutan input terjaga
         Map<String, Student> students = new LinkedHashMap<>();
-        // enrollmentsByStudent juga gunakan LinkedHashMap
         Map<String, List<Enrollment>> enrollmentsByStudent = new LinkedHashMap<>();
-        
-        // List untuk menyimpan pesan error sesuai urutan kemunculan
         List<String> errorMessages = new ArrayList<>();
         
         while (true) {
@@ -36,7 +35,6 @@ public class Driver2 {
                     case "student-add":
                         if (data.length == 5) {
                             Student student = new Student(data[1], data[2], data[3], data[4]);
-                            // Simpan sesuai urutan input
                             students.putIfAbsent(data[1], student);
                             enrollmentsByStudent.putIfAbsent(data[1], new ArrayList<>());
                         }
@@ -64,28 +62,19 @@ public class Driver2 {
             }
         }
         sc.close();
-        
-        // Cetak error messages terlebih dahulu sesuai urutan muncul
         for (String err : errorMessages) {
             System.out.println(err);
         }
-        
-        // Cetak courses (TreeMap sudah mengurutkan secara ascending)
         for (Course c : courses.values()) {
             System.out.println(c);
         }
-        
-        // Cetak students (LinkedHashMap, jadi urutan sesuai input)
         for (Student s : students.values()) {
             System.out.println(s);
         }
-        
-        // Kumpulkan semua enrollments dari masing-masing student
         List<Enrollment> enrollments = new ArrayList<>();
         for (List<Enrollment> list : enrollmentsByStudent.values()) {
             enrollments.addAll(list);
         }
-        // Urutkan enrollments: pertama berdasarkan course code ascending, lalu student id ascending
         enrollments.sort((e1, e2) -> {
             int cmp = e1.getCourseCode().compareTo(e2.getCourseCode());
             if (cmp == 0) {

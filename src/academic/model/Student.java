@@ -1,3 +1,7 @@
+/**
+ * 12S23019 - Clarasia Simanjuntak 
+ * 12S23043 - Grace Tiodora
+ */
 package academic.model;
 
 import java.util.Objects;
@@ -17,28 +21,22 @@ public class Student {
         this.academicYear = academicYear;
         this.major = major;
     }
-
     public String getStudentId() {
         return studentId;
     }
-
     public String getStudentName() {
         return studentName;
     }
-
     public String getAcademicYear() {
         return academicYear;
     }
-
     public String getMajor() {
         return major;
     }
-
     @Override
     public String toString() {
         return studentId + "|" + studentName + "|" + academicYear + "|" + major;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,7 +44,6 @@ public class Student {
         Student student = (Student) o;
         return Objects.equals(studentId, student.studentId);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(studentId);

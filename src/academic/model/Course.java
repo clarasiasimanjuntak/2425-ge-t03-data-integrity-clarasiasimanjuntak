@@ -1,3 +1,7 @@
+/**
+ * 12S23019 - Clarasia Simanjuntak 
+ * 12S23043 - Grace Tiodora
+ */
 package academic.model;
 
 import java.util.Objects;
@@ -18,11 +22,9 @@ public class Course {
     public String getCourseCode() {
         return courseCode;
     }
-
     public String toString() {
         return courseCode + "|" + courseName + "|" + credits + "|" + grade;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -30,7 +32,6 @@ public class Course {
         Course course = (Course) obj;
         return courseCode.equals(course.courseCode);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(courseCode);
