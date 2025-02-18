@@ -8,8 +8,10 @@ import java.util.*;
 public class Driver1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        // Untuk course, gunakan TreeMap agar urut berdasarkan kode secara ascending.
         Map<String, Course> courses = new TreeMap<>();
-        Map<String, Student> students = new TreeMap<>();
+        // Untuk student, gunakan LinkedHashMap agar urutan sesuai input.
+        Map<String, Student> students = new LinkedHashMap<>();
         List<Enrollment> enrollments = new ArrayList<>();
 
         while (true) {
@@ -19,7 +21,7 @@ public class Driver1 {
             String[] data = input.split("#");
             if (data.length > 1) {
                 String command = data[0].trim();
-                
+
                 switch (command) {
                     case "course-add":
                         if (data.length == 5) {
@@ -39,17 +41,17 @@ public class Driver1 {
                         if (data.length == 5) {
                             String courseCode = data[1];
                             String studentId = data[2];
-                            
+                            // Jika course tidak ada, tampilkan error dan skip.
                             if (!courses.containsKey(courseCode)) {
-                                System.out.println("        invalid course|" + courseCode);
+                                System.out.println("invalid course|" + courseCode);
+                                continue;
                             }
+                            // Jika student tidak ada, tampilkan error dan skip.
                             if (!students.containsKey(studentId)) {
-                                System.out.println("        invalid student|" + studentId);
+                                System.out.println("invalid student|" + studentId);
+                                continue;
                             }
-                            
-                            if (courses.containsKey(courseCode) && students.containsKey(studentId)) {
-                                enrollments.add(new Enrollment(courseCode, studentId, data[3], data[4], "None"));
-                            }
+                            enrollments.add(new Enrollment(courseCode, studentId, data[3], data[4], "None"));
                         }
                         break;
                 }
@@ -57,17 +59,17 @@ public class Driver1 {
         }
         sc.close();
 
-        // Print courses
+        // Cetak daftar courses (urut ascending karena TreeMap)
         for (Course course : courses.values()) {
-            System.out.println("        " + course);
+            System.out.println(course);
         }
 
-        // Print students
+        // Cetak daftar students (urutan sesuai input)
         for (Student student : students.values()) {
-            System.out.println("        " + student);
+            System.out.println(student);
         }
 
-        // Sort and print enrollments
+        // Sort enrollments: pertama berdasarkan course code, lalu student id
         enrollments.sort((e1, e2) -> {
             int cmp = e1.getCourseCode().compareTo(e2.getCourseCode());
             if (cmp == 0) {
@@ -75,9 +77,8 @@ public class Driver1 {
             }
             return cmp;
         });
-        
         for (Enrollment enrollment : enrollments) {
-            System.out.println("        " + enrollment);
+            System.out.println(enrollment);
         }
     }
 }

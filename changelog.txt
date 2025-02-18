@@ -184,8 +184,7 @@ TIS3001|Keteknowiraan|3|C
 12S20024|Sandro Sinaga|2020|Information Systems
 12S20029|Yehezchiel Abed Rafles Sibuea|2020|Information Systems
 12S20032|Permana Gabriel Panjaitan|2020|Information Systems
-12S19044|Elisabet Margaret Sirait|2019|Information System+
-s
+12S19044|Elisabet Margaret Sirait|2019|Information Systems
 12S20030|Lamsihar Siahaan|2020|Information Systems
 12S20031|Daniel Andres Simangunsong|2020|Information Systems
 12S19003|Dian Filia Matondang|2019|Information Systems
