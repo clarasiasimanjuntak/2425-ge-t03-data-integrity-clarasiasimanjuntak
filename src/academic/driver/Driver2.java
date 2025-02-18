@@ -8,12 +8,14 @@ import java.util.*;
 public class Driver2 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        // Gunakan TreeMap agar data courses dan students terurut ascending berdasarkan key
+        // Courses diurutkan secara ascending (TreeMap)
         Map<String, Course> courses = new TreeMap<>();
-        Map<String, Student> students = new TreeMap<>();
-        Map<String, List<Enrollment>> enrollmentsByStudent = new TreeMap<>();
+        // Students menggunakan LinkedHashMap agar urutan input terjaga
+        Map<String, Student> students = new LinkedHashMap<>();
+        // enrollmentsByStudent juga gunakan LinkedHashMap
+        Map<String, List<Enrollment>> enrollmentsByStudent = new LinkedHashMap<>();
         
-        // List untuk menyimpan pesan error agar dicetak terlebih dahulu
+        // List untuk menyimpan pesan error sesuai urutan kemunculan
         List<String> errorMessages = new ArrayList<>();
         
         while (true) {
@@ -34,6 +36,7 @@ public class Driver2 {
                     case "student-add":
                         if (data.length == 5) {
                             Student student = new Student(data[1], data[2], data[3], data[4]);
+                            // Simpan sesuai urutan input
                             students.putIfAbsent(data[1], student);
                             enrollmentsByStudent.putIfAbsent(data[1], new ArrayList<>());
                         }
@@ -62,17 +65,17 @@ public class Driver2 {
         }
         sc.close();
         
-        // Cetak pesan error terlebih dahulu (dengan urutan sesuai terjadinya error)
+        // Cetak error messages terlebih dahulu sesuai urutan muncul
         for (String err : errorMessages) {
             System.out.println(err);
         }
         
-        // Cetak courses (TreeMap sudah mengurutkan berdasarkan kode course ascending)
+        // Cetak courses (TreeMap sudah mengurutkan secara ascending)
         for (Course c : courses.values()) {
             System.out.println(c);
         }
         
-        // Cetak students (TreeMap mengurutkan berdasarkan student id ascending)
+        // Cetak students (LinkedHashMap, jadi urutan sesuai input)
         for (Student s : students.values()) {
             System.out.println(s);
         }
