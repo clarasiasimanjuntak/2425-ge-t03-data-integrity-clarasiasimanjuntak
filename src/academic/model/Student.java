@@ -16,6 +16,7 @@ public class Student {
         if (studentId == null || studentId.isEmpty() || studentName == null || studentName.isEmpty()) {
             throw new IllegalArgumentException("Student ID and name cannot be empty!");
         }
+        
         this.studentId = studentId;
         this.studentName = studentName;
         this.academicYear = academicYear;

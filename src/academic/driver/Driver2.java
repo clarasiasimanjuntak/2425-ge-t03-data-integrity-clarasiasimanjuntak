@@ -65,6 +65,7 @@ public class Driver2 {
         for (String err : errorMessages) {
             System.out.println(err);
         }
+        
         for (Course c : courses.values()) {
             System.out.println(c);
         }

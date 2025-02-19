@@ -30,6 +30,7 @@
         "timeout": 1,
         "points": 15
       },
+      
       {
         "name": "t03-02-02",
         "setup": "make compile",

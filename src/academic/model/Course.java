@@ -31,6 +31,7 @@ public class Course {
     public String getGrade() {
         return grade;
     }
+    
     public String toString() {
         return courseCode + "|" + courseName + "|" + credits + "|" + grade;
     }
