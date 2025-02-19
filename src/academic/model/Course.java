@@ -22,6 +22,15 @@ public class Course {
     public String getCourseCode() {
         return courseCode;
     }
+    public String getCourseName() {
+        return courseName;
+    }
+    public int getCredits() {
+        return credits;
+    }
+    public String getGrade() {
+        return grade;
+    }
     public String toString() {
         return courseCode + "|" + courseName + "|" + credits + "|" + grade;
     }
